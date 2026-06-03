@@ -16,5 +16,9 @@ public class User extends BaseModel {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> orders;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public User() {}
 }
