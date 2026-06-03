@@ -1,10 +1,9 @@
-<script setup></script>
-
 <template>
-  <div>
-  <h1>You did it!</h1>
-    <p>Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the documentation</p>
-  </div>
+  <Layout></Layout>
 </template>
+
+<script setup>
+import Layout from "./components/Layout.vue"
+</script>
 
 <style scoped></style>

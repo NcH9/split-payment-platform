@@ -3,7 +3,7 @@ export default {
     methods: {
         async login() {
             try {
-                const response = await api.get(`/login/${id}`);
+                const response = await axios.get(`/login/${this.id}`);
                 localStorage.setItem('authData', JSON.stringify(response.data));
                 localStorage.setItem('username', response.data.name);
             } catch (error) {
@@ -12,7 +12,7 @@ export default {
         },
         async register() {
             try {
-                const response = await api.post('/register/{name}', { name: this.username });
+                const response = await axios.post(`/register/${this.username}`);
                 localStorage.setItem('authData', JSON.stringify(response.data));
                 localStorage.setItem('username', response.data.name);
             } catch (error) {
