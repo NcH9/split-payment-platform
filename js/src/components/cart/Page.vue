@@ -50,67 +50,73 @@
     <div v-if="cart.length > 0" class="summary">
       <h3>Total: ${{ totalPrice }}</h3>
 
-      <el-button type="primary" size="large" @click="createPayment">
-        Create payment
+      <el-button type="primary" size="large" @click="createOrder">
+        Order now
       </el-button>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from "vue"
+<script>
 import { useRouter } from "vue-router"
 import { ElMessage } from "element-plus"
+import OrderMixin from "../../mixins/orderMixin.js"
 
 const router = useRouter()
-const cart = ref([])
 
-const loadCart = () => {
-  const data = localStorage.getItem("cart")
-  cart.value = data ? JSON.parse(data) : []
-}
-
-const saveCart = () => {
-  localStorage.setItem("cart", JSON.stringify(cart.value))
-}
-
-const removeItem = (id) => {
-  cart.value = cart.value.filter(item => item.id !== id)
-  saveCart()
-
-  ElMessage({
-    type: "info",
-    message: "Item removed",
-  })
-}
-
-const totalPrice = computed(() => {
-  return cart.value
-    .reduce((sum, item) => sum + item.price * item.qty, 0)
-    .toFixed(2)
-})
-
-const createPayment = () => {
-  if (cart.value.length === 0) return
-
-  const amount = totalPrice.value
-
-  router.push({
-    path: "/payment",
-    query: {
-      amount,
+export default {
+  mixins: [OrderMixin],
+  data() {
+    return {
+      cart: [],
+    }
+  },
+  computed: {
+    totalPrice() {
+      return this.cart
+        .reduce((sum, item) => sum + item.price * item.qty, 0)
+        .toFixed(2)
     },
-  })
+  },
+  methods: {
+    loadCart() {
+      const data = localStorage.getItem("cart")
+      this.cart = data ? JSON.parse(data) : []
+    },
+    saveCart() {
+      localStorage.setItem("cart", JSON.stringify(this.cart))
+    },
+    removeItem(id) {
+      this.cart = this.cart.filter(item => item.id !== id)
+      this.saveCart()
 
-  ElMessage({
-    type: "success",
-    message: "Redirecting to payment...",
-  })
+      ElMessage({
+        type: "info",
+        message: "Item removed",
+      })
+    },
+    createOrder() {
+      if (cart.value.length === 0) return
+
+        const amount = totalPrice.value
+
+        router.push({
+          path: "/payment",
+          query: {
+            amount,
+          },
+        })
+
+        ElMessage({
+          type: "success",
+          message: "Redirecting to payment...",
+        })
+    }
+  },
+  mounted() {
+    this.loadCart()
+  },
 }
-
-onMounted(() => {
-  loadCart()
-})
 </script>
 
 <style scoped>
