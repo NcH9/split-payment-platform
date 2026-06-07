@@ -26,7 +26,12 @@
         <b>${{ calculatedAmount }}</b>
       </p>
 
-      <el-button type="primary" size="large" @click="pay">
+      <el-button 
+        type="primary"
+        size="large" 
+        @click="pay" 
+        :disabled="amount === 0 || orderId === null"
+      >
         Pay now
       </el-button>
     </el-card>
