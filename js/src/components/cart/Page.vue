@@ -95,15 +95,19 @@ export default {
         message: "Item removed",
       })
     },
-    createOrder() {
+    async createOrder() {
       if (cart.value.length === 0) return
 
-        const amount = totalPrice.value
+      const amount = totalPrice.value
+
+      try {
+        const newOrderId = await this.saveOrder();
 
         router.push({
           path: "/payment",
           query: {
-            amount,
+            orderId: newOrderId,
+            priceToPay: amount,
           },
         })
 
@@ -111,6 +115,9 @@ export default {
           type: "success",
           message: "Redirecting to payment...",
         })
+      } catch (error) {
+
+      }
     }
   },
   mounted() {

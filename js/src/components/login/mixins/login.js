@@ -5,7 +5,7 @@ export default {
             try {
                 const response = await axios.get(`/login/${this.id}`);
                 localStorage.setItem('authData', JSON.stringify(response.data));
-                localStorage.setItem('username', response.data.name);
+                localStorage.setItem('username', response.data.username);
             } catch (error) {
                 console.error('Login failed:', error);
             }

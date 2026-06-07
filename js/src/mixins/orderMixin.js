@@ -22,7 +22,7 @@ export default {
                 }
 
                 const response = await axios.get(
-                    `/orders/${authData.id}`
+                    `/users/${authData.id}/orders`
                 )
 
                 this.orders = response.data
@@ -33,7 +33,7 @@ export default {
                 this.loading = false
             }
         },
-        async createOrder() {
+        async saveOrder() {
             try {
                 this.loading = true;
                 const authData = JSON.parse(
@@ -50,6 +50,8 @@ export default {
                     paidPrice: 0,
                     fullPrice: this.totalPrice,
                 })
+
+                return response.data.id
             } catch (error) {
                 this.loading = false;
                 console.error(error)
