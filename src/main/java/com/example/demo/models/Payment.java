@@ -17,5 +17,23 @@ public class Payment extends BaseModel {
 
     public Payment() {}
 
-    // getters/setters
+    public Long getId() {
+        return id;
+    }
+
+    public Double getPaidPrice() {
+        return paidPrice;
+    }
+
+    public void setPaidPrice(Double paidPrice) {
+        this.paidPrice = paidPrice;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }
