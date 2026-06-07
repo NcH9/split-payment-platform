@@ -12,7 +12,7 @@ import com.example.demo.repositories.OrderRepository;
 
 @RestController
 @RequestMapping("/api")
-public class PaymentController extends BaseController {
+public class PaymentController {
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
 

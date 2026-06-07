@@ -10,9 +10,11 @@ import com.example.demo.models.User;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.UserRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
-public class OrderController extends BaseController {
+public class OrderController {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
@@ -33,5 +35,13 @@ public class OrderController extends BaseController {
         order.setFullPrice(dto.getFullPrice());
 
         return orderRepository.save(order);
+    }
+
+    @GetMapping("/users/{userId}/orders")
+    public List<Order> getOrdersByUserId(@PathVariable Long userId) {
+        userRepository.findById(userId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        return orderRepository.findByUserId(userId);
     }
 }

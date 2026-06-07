@@ -9,7 +9,7 @@ import com.example.demo.repositories.UserRepository;
 
 @RestController
 @RequestMapping("/api")
-public class UserController extends BaseController {
+public class UserController {
     private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
@@ -27,10 +27,10 @@ public class UserController extends BaseController {
             );
     }
 
-    @PostMapping("/register/{name}")
-    public User register(@PathVariable String name) {
+    @PostMapping("/register/{username}")
+    public User register(@PathVariable String username) {
         User user = new User();
-        user.setName(name);
+        user.setUsername(username);
         return userRepository.save(user);
     }
     
