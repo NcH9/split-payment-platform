@@ -3,7 +3,7 @@ A simple full-stack project that demonstrates an order management system with su
 The system allows users to create orders and pay them in multiple installments instead of a single full payment. Each order can have multiple related payments, while each payment belongs to one order.  
 
 STACK:  
-Backend: Java, Spring Boot, Flyway
+Backend: Java, Spring Boot, Flyway  
 Frontend: Vue 3, Axios, Element Plus  
 Database: PostgreSQL  
 DevOps: Docker, Docker Compose  
