@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-tabs v-if="isLoggedIn" type="border-card">
+        <el-tabs v-if="!isLoggedIn" type="border-card">
             <el-tab-pane label="Login" name="login">
                 <Login />
             </el-tab-pane>
@@ -10,7 +10,10 @@
             </el-tab-pane>
         </el-tabs>
         <div v-else>
-            <h2>Welcome, {{ userData }}</h2>
+            <h2>Welcome, {{ userData?.name }}</h2>
+            <el-button type="danger" @click="logout">
+                Logout
+            </el-button>
         </div>
     </div>
 </template>
@@ -29,14 +32,23 @@ export default {
     },
     data() {
         return {
-            userData: localStorage.getItem('authData'),
+            userData: null,
+        }
+    },
+    computed: {
+        isLoggedIn() {
+            const authData = JSON.parse(
+                localStorage.getItem("authData")
+            )
+            this.userData = authData
+            return authData && authData !== "null" && authData !== "undefined"
         }
     },
     methods: {
-        isLoggedIn() {
-            const data = localStorage.getItem("authData")
-            return data && data !== "null" && data !== "undefined"
+        logout() {
+            localStorage.removeItem("authData")
+            this.userData = null
         }
-    }
+    },
 }
 </script>
