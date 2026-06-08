@@ -21,23 +21,31 @@
             />
 
             <el-table-column
-                prop="status"
-                label="Status"
+                prop="paidPrice"
+                label="Paid Price"
             />
 
             <el-table-column
-                prop="totalAmount"
-                label="Amount"
+                prop="fullPrice"
+                label="Full Price"
             >
                 <template #default="{ row }">
-                    ${{ row.totalAmount }}
+                    ${{ row.fullPrice }}
                 </template>
             </el-table-column>
 
             <el-table-column
-                prop="createdAt"
-                label="Created"
-            />
+                label="Actions"
+            >
+                <template #default="{ row }">
+                    <el-button
+                        type="primary"
+                        @click="redirectToPayment(row)"
+                    >
+                        Pay
+                    </el-button>
+                </template>
+            </el-table-column>
         </el-table>
 
         <el-empty
@@ -56,5 +64,16 @@ export default {
     async mounted() {
         await this.loadOrders()
     },
+    methods: {
+        redirectToPayment(order) {
+            this.$router.push({
+                path: "/payment",
+                query: {
+                    orderId: order.id,
+                    priceToPay: order.fullPrice,
+                },
+            })
+        }
+    }
 }
 </script>

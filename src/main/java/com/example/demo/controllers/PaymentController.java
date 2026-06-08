@@ -27,9 +27,21 @@ public class PaymentController {
         Order order = orderRepository.findById(dto.getOrderId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
+        if (order.getPaidPrice() > order.getFullPrice() 
+            || (dto.getPaidPrice() + order.getPaidPrice())> order.getFullPrice()) 
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paid price cannot be greater than full price");
+        }
+        
+        if (dto.getPaidPrice() > 0) {
+            order.setPaidPrice(order.getPaidPrice() + dto.getPaidPrice());
+        }
+
         Payment payment = new Payment();
         payment.setOrder(order);
         payment.setPaidPrice(dto.getPaidPrice());
+
+        orderRepository.save(order);
 
         return paymentRepository.save(payment);
     }

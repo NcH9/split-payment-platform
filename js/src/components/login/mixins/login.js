@@ -1,9 +1,10 @@
-import axios from 'axios';
+import api from '@/axios/axios';
+
 export default {
     methods: {
         async login() {
             try {
-                const response = await axios.get(`/login/${this.id}`);
+                const response = await api.get(`/login/${this.id}`);
                 localStorage.setItem('authData', JSON.stringify(response.data));
                 localStorage.setItem('username', response.data.username);
             } catch (error) {
@@ -12,7 +13,7 @@ export default {
         },
         async register() {
             try {
-                const response = await axios.post(`/register/${this.username}`);
+                const response = await api.post(`/register/${this.username}`);
                 localStorage.setItem('authData', JSON.stringify(response.data));
                 localStorage.setItem('username', response.data.name);
             } catch (error) {

@@ -40,7 +40,6 @@
 
 <script>
 import { useRoute } from "vue-router"
-import { ElMessage } from "element-plus"
 import PaymentMixin from "../../mixins/paymentMixin.js";
 
 const route = useRoute()
@@ -49,29 +48,26 @@ export default {
   mixins: [PaymentMixin],
   data(){
     return {
-      amount: Number(route.query.priceToPay || 0),
-      orderId: (Number(route.query.orderId) || null),
+      amount: Number(this.$route.query.priceToPay || 0),
+      orderId: (Number(this.$route.query.orderId) || null),
       selectedPercent: 100,
     }
   },
   computed: {
     availablePercents() {
-      return amount >= 100
+      return this.amount >= 100
         ? [25, 50, 75, 100]
         : [100]
     },
     calculatedAmount() {
-      return ((amount * selectedPercent.value) / 100).toFixed(2)
+      return ((this.amount * this.selectedPercent) / 100).toFixed(2)
     }
   },
   methods: {
     async pay() {
       await this.createPayment();
 
-      ElMessage({
-        type: "success",
-        message: `Payment of $${calculatedAmount.value} successful`,
-      })
+      
     }
   }
 }

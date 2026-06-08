@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '@/axios/axios';
 export default {
     data() {
         return {
@@ -21,7 +21,7 @@ export default {
                     return
                 }
 
-                const response = await axios.get(
+                const response = await api.get(
                     `/users/${authData.id}/orders`
                 )
 
@@ -40,12 +40,12 @@ export default {
                     localStorage.getItem("authData")
                 )
 
-                if (!authData) {
+                if (!authData?.id) {
                     this.error = "User is not logged in"
                     return
                 }
 
-                const response = await axios.post(`/orders`, {
+                const response = await api.post(`/orders`, {
                     userId: authData.id,
                     paidPrice: 0,
                     fullPrice: this.totalPrice,

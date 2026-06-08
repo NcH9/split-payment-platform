@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,8 +13,9 @@ public class Payment extends BaseModel {
 
     private Double paidPrice;
 
-    @OneToOne
-    @JoinColumn(name = "order_id") // FK
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     public Payment() {}

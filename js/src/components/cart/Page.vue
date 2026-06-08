@@ -96,9 +96,9 @@ export default {
       })
     },
     async createOrder() {
-      if (cart.value.length === 0) return
+      if (this.cart.length === 0) return
 
-      const amount = totalPrice.value
+      const amount = this.totalPrice
 
       try {
         const newOrderId = await this.saveOrder();

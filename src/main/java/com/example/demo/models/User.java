@@ -20,5 +20,13 @@ public class User extends BaseModel {
         this.username = username;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return username;
+    }
+
     public User() {}
 }

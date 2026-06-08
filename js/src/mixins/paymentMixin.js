@@ -1,4 +1,5 @@
-import axios from 'axios';
+import api from '@/axios/axios';
+import { ElMessage } from "element-plus"
 
 export default {
     data() {
@@ -19,15 +20,23 @@ export default {
                     return
                 }
 
-                const response = await axios.post(`/payments`, {
+                const response = await api.post(`/payments`, {
                     userId: authData.id,
                     paidPrice: this.calculatedAmount,
                     orderId: this.orderId,
                 })
+                
+                ElMessage({
+                    type: "success",
+                    message: `Payment of $${this.calculatedAmount} successful`,
+                })
             } catch (error) {
                 this.loading = false;
                 console.error(error)
-                this.error = "Failed to create payment"
+                ElMessage({
+                    type: "error",
+                    message: "Failed to create payment",
+                })
             } finally {
                 this.loading = false;
             }

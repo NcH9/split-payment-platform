@@ -1,5 +1,8 @@
 package com.example.demo.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,7 +12,6 @@ public class Order extends BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String products;
     private Double paidPrice;
     private Double fullPrice;
 
@@ -17,21 +19,13 @@ public class Order extends BaseModel {
     @JoinColumn(name = "user_id") // FK
     private User user;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private Payment payment;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<Payment> payments = new ArrayList<>();
 
     public Order() {}
     
     public Long getId() {
         return id;
-    }
-
-    public String getProducts() {
-        return products;
-    }
-
-    public void setProducts(String products) {
-        this.products = products;
     }
 
     public Double getPaidPrice() {
@@ -58,11 +52,11 @@ public class Order extends BaseModel {
         this.user = user;
     }
 
-    public Payment getPayment() {
-        return payment;
+    public List<Payment> getPayments() {
+        return payments;
     }
 
-    public void setPayment(Payment payment) {
-        this.payment = payment;
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 }
