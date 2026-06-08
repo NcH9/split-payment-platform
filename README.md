@@ -12,8 +12,9 @@ PURPOSE:
 This project is built for learning and practicing backend architecture, REST API design, and real-world payment flow modeling similar to modern fintech systems.  
   
 HOW TO INSTALL (after git clone):  
-(create .env using .env.example)
+(create .env using .env.example)  
 cd split-payment-platform  
+docker build  
 docker compose up -d  
   
 cd js  
